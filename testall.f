@@ -10,7 +10,7 @@
         parameter (pi=3.141592653589793238462643383279502884197d0)
         complex*16 U(128,12),V(128,12),c(128),S(128),re(128),M(128,12)
         complex*16 fk(-64:63)
-        real*8 x1(128),eps
+        real*8 x1(128),eps,error
         double complex in1, out1
         dimension in1(128), out1(128)
 	integer*8 :: plan
@@ -76,7 +76,9 @@
         time2=sum((values2(5:8)-values1(5:8))*arr)
         print *,' T_nyu         = ',time2/num
         print *,' T_our/T_nyu   = ',time1/time2
-        print *,sum((S-conjg(fk)*nj)*conjg(S-conjg(fk)*nj))
+        error=real(sum((S-conjg(fk)*nj)*conjg(S-conjg(fk)*nj))/
+     &  sum(S*conjg(S)))
+        print *,' error         = ',error
         call dfftw_destroy_plan(plan)
         
 
