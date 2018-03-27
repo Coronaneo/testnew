@@ -42,7 +42,8 @@
         open(unit = 10,file = 'Vi.txt')
         read(10,*) V2
         call dfftw_plan_dft_1d(plan,nj,in1,out1,FFTW_FORWARD,0)
-
+	  print *,'start 1D type 1 test:','nj  =',nj,',ns  =',ns
+	  print *,'eps              =',eps
         re=dcmplx(re1,re2)        
         U=dcmplx(transpose(U1),transpose(U2))
         V=dcmplx(transpose(V1),transpose(V2))
@@ -78,7 +79,7 @@
         print *,' T_our/T_nyu   = ',time1/time2
         error=real(sum((S-conjg(fk)*nj)*conjg(S-conjg(fk)*nj))/
      &  sum(S*conjg(S)))
-        print *,' error         = ',error
+        print *,' relative error= ',error
         call dfftw_destroy_plan(plan)
         
 
